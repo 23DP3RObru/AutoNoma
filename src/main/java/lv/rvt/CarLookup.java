@@ -42,6 +42,12 @@ public class CarLookup {
         }
         return result;
     }
-}
+    public Set<String> getUniqueCarMakes() {
+        Set<String> uniqueMakes = new HashSet<>();
+        for (Car car : cars) {
+            uniqueMakes.add(car.getMarka());
+        }
+        return uniqueMakes;
+    }}
 
 
