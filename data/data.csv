@@ -1,5 +1,19 @@
-name, age
-Jack, 22
-Peter, 19
-Peter, 19
-Peter, 19
+marka, modelis, tips, gads, stundas_maksa
+BMW, 320d, sedan, 2017, 5
+Audi, A4, sedan, 2016, 4
+VW, Passat, universal, 2015, 3
+BMW, 520d, sedan, 2018, 6
+Audi, A6, universal, 2017, 7
+VW, Golf, hatchback, 2016, 2
+BMW, 730d, sedan, 2019, 8
+BMW, 750iL, luxury, 1999, 10
+Audi, A8, luxury, 2000, 9
+BMW, M5, sport, 2000, 12
+Audi, RS6, sport, 2001, 11
+VW, Golf GTI, sport, 2019, 13
+Toyota, Corolla, sedan, 2019, 4
+Toyota, RAV4, suv, 2018, 5
+Ford, Focus, hatchback, 2017, 3
+Ford, Mondeo, sedan, 2016, 4
+VW, Passat, universal, 2015, 3
+VW, Tiguan, suv, 2014, 4
