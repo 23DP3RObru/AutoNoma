@@ -1,19 +1,134 @@
 marka, modelis, tips, gads, stundas_maksa
 BMW, 320d, sedan, 2017, 5
-Audi, A4, sedan, 2016, 4
-VW, Passat, universal, 2015, 3
 BMW, 520d, sedan, 2018, 6
-Audi, A6, universal, 2017, 7
-VW, Golf, hatchback, 2016, 2
 BMW, 730d, sedan, 2019, 8
 BMW, 750iL, luxury, 1999, 10
-Audi, A8, luxury, 2000, 9
 BMW, M5, sport, 2000, 12
+BMW, E30 M3, sport, 1990, 15
+BMW, E34 540i, sedan, 1994, 10
+BMW, E36 328i, coupe, 1995, 8
+BMW, 850CSi, luxury, 1996, 18
+BMW, M3 E46, sport, 2005, 14
+BMW, 135i Coupe, sport, 2010, 12
+BMW, 750Li, luxury, 2015, 15
+
+Audi, A4, sedan, 2016, 4
+Audi, A6, universal, 2017, 7
+Audi, A8, luxury, 2000, 9
 Audi, RS6, sport, 2001, 11
+Audi, Quattro, sport, 1991, 16
+Audi, S4, sedan, 1993, 10
+Audi, 80 Coupe, coupe, 1992, 8
+Audi, V8, luxury, 1990, 12
+Audi, TT RS, sport, 2009, 13
+Audi, Q7, suv, 2014, 10
+Audi, S5, coupe, 2012, 11
+
+VW, Passat, universal, 2015, 3
+VW, Golf, hatchback, 2016, 2
 VW, Golf GTI, sport, 2019, 13
+VW, Tiguan, suv, 2014, 4
+VW, Corrado VR6, coupe, 1993, 9
+VW, Golf Mk2 GTI, hatchback, 1990, 7
+VW, Passat B3, sedan, 1991, 5
+VW, Phaeton W12, luxury, 2004, 11
+VW, Scirocco R, sport, 2012, 10
+VW, Touareg V10 TDI, suv, 2008, 9
+
 Toyota, Corolla, sedan, 2019, 4
 Toyota, RAV4, suv, 2018, 5
+Toyota, Land Cruiser, suv, 2020, 10
+Toyota, Camry, sedan, 2018, 5
+Toyota, Supra MK4, sport, 1994, 20
+Toyota, Celica GT-Four, sport, 1992, 12
+Toyota, MR2 Turbo, sport, 1993, 14
+Toyota, Chaser JZX100, sedan, 1996, 11
+Toyota, Mark X, sedan, 2007, 8
+Toyota, FJ Cruiser, suv, 2013, 7
+
 Ford, Focus, hatchback, 2017, 3
 Ford, Mondeo, sedan, 2016, 4
-VW, Passat, universal, 2015, 3
-VW, Tiguan, suv, 2014, 4
+Ford, Mustang, sport, 2019, 10
+Ford, Escort RS Cosworth, sport, 1992, 15
+Ford, Sierra RS500, sport, 1990, 14
+Ford, F-150 SVT Lightning, truck, 1999, 12
+Ford, Mustang GT500, sport, 2008, 15
+Ford, Explorer, suv, 2015, 7
+
+Mercedes, C200, sedan, 2017, 6
+Mercedes, E220, sedan, 2018, 7
+Mercedes, S500, luxury, 2015, 10
+Mercedes, GLE, suv, 2020, 11
+Mercedes, 190E 2.5-16, sport, 1991, 14
+Mercedes, W140 S600, luxury, 1995, 12
+Mercedes, SL500 R129, convertible, 1993, 16
+Mercedes, E63 AMG, sport, 2009, 14
+Mercedes, G55 AMG, suv, 2005, 16
+
+Honda, Civic, hatchback, 2017, 3
+Honda, Accord, sedan, 2016, 4
+Honda, NSX, sport, 1991, 20
+Honda, Integra Type R, sport, 1998, 15
+Honda, Prelude VTEC, coupe, 1995, 10
+Honda, S2000, sport, 2006, 14
+Honda, CR-V, suv, 2013, 5
+
+Mazda, 6, sedan, 2018, 5
+Mazda, CX-5, suv, 2019, 6
+Mazda, RX-7 FD, sport, 1993, 18
+Mazda, MX-5 NA, convertible, 1991, 12
+Mazda, 323 GTR, hatchback, 1992, 10
+Mazda, RX-8, sport, 2005, 10
+
+Subaru, Outback, universal, 2017, 5
+Subaru, WRX, sport, 2018, 8
+Subaru, Impreza 22B, sport, 1998, 20
+Subaru, Legacy GT, sedan, 1995, 10
+Subaru, Forester XT, suv, 2007, 8
+
+Porsche, 911, sport, 2020, 15
+Porsche, Cayenne, suv, 2019, 12
+Porsche, 911 Carrera RS, sport, 1995, 25
+Porsche, 928 GTS, luxury, 1993, 14
+Porsche, Cayman S, sport, 2006, 16
+
+Lexus, RX450h, suv, 2020, 9
+Lexus, IS300, sedan, 2018, 7
+Lexus, LS400, luxury, 1994, 10
+Lexus, SC400, coupe, 1992, 12
+Lexus, IS-F, sport, 2012, 14
+
+Nissan, Maxima, sedan, 2017, 5
+Nissan, Pathfinder, suv, 2018, 6
+Nissan, Skyline GT-R R34, sport, 1999, 22
+Nissan, Silvia S15, sport, 1999, 18
+Nissan, 300ZX Twin Turbo, sport, 1994, 15
+Nissan, GT-R R35, sport, 2010, 20
+
+Mitsubishi, Outlander, suv, 2019, 5
+Mitsubishi, Lancer, sedan, 2017, 4
+Mitsubishi, Lancer Evo VI, sport, 1999, 20
+Mitsubishi, 3000GT VR4, sport, 1995, 16
+Mitsubishi, Pajero Evolution, suv, 1997, 12
+Mitsubishi, Lancer Evo X, sport, 2008, 17
+
+Chevrolet, Camaro, sport, 2019, 10
+Chevrolet, Corvette C4 ZR-1, sport, 1991, 18
+Chevrolet, Impala SS, sedan, 1996, 12
+Chevrolet, Corvette C6 Z06, sport, 2006, 18
+
+Dodge, Charger, sedan, 2018, 7
+Dodge, Challenger, sport, 2019, 9
+Dodge, Viper GTS, sport, 1996, 22
+Dodge, Charger SRT8, sport, 2012, 14
+
+Cadillac, Escalade, suv, 2020, 12
+Cadillac, CTS, sedan, 2018, 7
+Cadillac, CTS-V, sport, 2009, 16
+Cadillac, Escalade V, suv, 2023, 20
+
+Lincoln, Navigator, suv, 2020, 11
+Lincoln, Town Car, luxury, 1995, 9
+
+GMC, Yukon, suv, 2019, 9
+GMC, Sierra Denali, truck, 2010, 10
