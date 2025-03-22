@@ -7,10 +7,33 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class App {
     public static void main(String[] args) {
         Start();
+    }
+
+    public static boolean validUsername(String filename, String categoryToCheck, int column) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+            String line;
+
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split(", ");
+                
+                String category = columns[column];
+                
+                if (category.equalsIgnoreCase(categoryToCheck)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean validEmail(String email) { // LIETOTĀJA IEVADĪTĀ ELEKTRONISKĀ PASTA PĀRBAUDES METODE
@@ -44,6 +67,18 @@ public class App {
         String username = scanner.nextLine();
         if (username.isEmpty()) {
             System.out.println("You left the username field empty."); // LIETOTĀJVĀRDA LAUKS ATSTĀTS TUKŠS
+        } else {
+            try {
+                File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
+
+                PrintWriter out = new PrintWriter(new FileWriter(loginFile, true));
+
+                out.print(username + ", ");
+
+                out.close();
+                } catch(IOException e) {
+                    System.out.println("Error when trying to open the file: " + e.getMessage());
+                }
         }
 
         System.out.print("Your email: ");
@@ -53,11 +88,11 @@ public class App {
 
             } else if (validEmail(email)) {
                 try {
-                File loginFile = new File("../../data/userLoginCredentials.csv");
+                File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
 
                 PrintWriter out = new PrintWriter(new FileWriter(loginFile, true));
 
-                out.println(email);
+                out.print(email + ", ");
 
                 out.close();
                 } catch(IOException e) {
@@ -72,6 +107,18 @@ public class App {
         String password = scanner.nextLine();
             if (password.isEmpty()) {
                 System.out.println("You left the password field empty.");  // PAROLE ATSTĀTA TUKŠA
+            } else {
+                try {
+                    File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
+    
+                    PrintWriter out = new PrintWriter(new FileWriter(loginFile, true));
+    
+                    out.println(password);
+    
+                    out.close();
+                    } catch(IOException e) {
+                        System.out.println("Error when trying to open the file: " + e.getMessage());
+                    }
             }
     scanner.close();
     }
