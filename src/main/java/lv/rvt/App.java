@@ -15,7 +15,7 @@ public class App {
         Start();
     }
 
-    public static boolean validUsername(String filename, String categoryToCheck, int column) {
+    public static boolean validData(String filename, String categoryToCheck, int column) { // DATU PARBAUDE ATKARIBA NO KATEGORIJAS
         try (BufferedReader br = new BufferedReader(new FileReader(filename))){
             String line;
 
@@ -67,6 +67,7 @@ public class App {
         String username = scanner.nextLine();
         if (username.isEmpty()) {
             System.out.println("You left the username field empty."); // LIETOTĀJVĀRDA LAUKS ATSTĀTS TUKŠS
+
         } else {
             try {
                 File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
@@ -85,8 +86,11 @@ public class App {
         String email = scanner.nextLine();
             if (email.isEmpty()) {
                 System.out.println("You left the email field empty."); // ELEKTRONISKĀ PASTA LAUKS ATSTĀTS TUKŠS
+                
+            } else if (!validEmail(email)) {
+                System.out.println("The email you entered isn't valid."); // ELEKTRONOSKAIS PASTS NEATBILST PAREIZRAKSTĪBAI
 
-            } else if (validEmail(email)) {
+            } else if (validEmail(email) && !validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", email, 1)) { // JA ELEKTRONISKAIS PASTS IZRAKSTITS PAREIZI UN TAS NEATKĀRTOJAS
                 try {
                 File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
 
@@ -98,10 +102,6 @@ public class App {
                 } catch(IOException e) {
                     System.out.println("Error when trying to open the file: " + e.getMessage());
                 }
-            } else {
-                System.out.println("The email you entered isn't valid."); // ELEKTRONOSKAIS PASTS NEATBILST PAREIZRAKSTĪBAI
-
-            }
 
         System.out.print("A strong password: "); // PAROLES LIETOTĀJA IEVADE
         String password = scanner.nextLine();
@@ -122,7 +122,7 @@ public class App {
             }
     scanner.close();
     }
-
+    }
     public static void login() {
         
     }
