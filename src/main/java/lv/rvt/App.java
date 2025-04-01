@@ -68,6 +68,11 @@ public class App {
         if (username.isEmpty()) {
             System.out.println("You left the username field empty."); // LIETOTĀJVĀRDA LAUKS ATSTĀTS TUKŠS
 
+        } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", username, 0) == true) {
+            System.out.println("This username is already in use, try another one!");
+            scanner.close();
+            return;
+
         } else {
             try {
                 File loginFile = new File("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv");
@@ -96,7 +101,7 @@ public class App {
 
                 PrintWriter out = new PrintWriter(new FileWriter(loginFile, true));
 
-                out.print(email + ", ");
+                out.print(email + ", "); // UZRAKSTA EMAIL CSV FILE UN JAU IELIEK KOMATU, LAI ATDALĪTU NO PAROLES
 
                 out.close();
                 } catch(IOException e) {
@@ -124,6 +129,30 @@ public class App {
     }
     }
     public static void login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Your email: ");
+        String lEmail = scanner.nextLine();
+
+        if (lEmail.isEmpty()) {
+            System.out.println("You left the email space blank.");
+
+        } else if (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", email, 1)) {
+            System.out.println("This email has not been previously registered. Try registering.");
+
+        } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", email, 1)) {
+            System.out.print("Password: ");
+            String lPassword = scanner.nextLine();
+            
+            while (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", password, 2)) {
+                System.out.println("The password you have entered looks to be incorrect, try again.");
+
+                if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", password, 2)) {
+                    System.out.println("Successfuly registered!");
+                }
+            }
+            scanner.close();
         
+        }
     }
 }
