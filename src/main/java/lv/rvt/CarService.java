@@ -16,21 +16,21 @@ public class CarService {
     public void searchAndDisplayCars() {
         Set<String> availableMakes = carLookup.getUniqueCarMakes();
         if (availableMakes.isEmpty()) {
-            System.out.println("Nav pieejamu automasinu.");
+            System.out.println("This vehicle is not available.");
             return;
         }
 
-        System.out.println("Pieejamas automasinu markas:");
+        System.out.println("Available car makes:");
         for (String make : availableMakes) {
             System.out.println("- " + make);
         }
 
-        System.out.print("\nIevadiet automasinas marku: ");
+        System.out.print("\nPlease enter car make you wish to select: ");
         String makeInput = scanner.nextLine().trim();
         List<Car> filteredCars = carLookup.filterCarsByMake(makeInput);
 
         if (filteredCars.isEmpty()) {
-            System.out.println("Netika atrastas automasinas ar marku: " + makeInput);
+            System.out.println("Unable to find this make: " + makeInput);
             return;
         }
 
@@ -39,21 +39,21 @@ public class CarService {
             System.out.println((i + 1) + ". " + filteredCars.get(i));
         }
 
-        System.out.print("\nIzvelieties automasinas numuru, kuru velaties rezervet: ");
+        System.out.print("\nPlease select the number of the car you wish to select: ");
         int choice;
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
             if (choice < 0 || choice >= filteredCars.size()) {
-                System.out.println("Nederiga izvele.");
+                System.out.println("Not an option.");
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Ludzu ievadiet derigu numuru.");
+            System.out.println("Enter a suitable number.");
             return;
         }
 
         Car selectedCar = filteredCars.get(choice);
         carLookup.markCarAsTaken(selectedCar);
-        System.out.println("Jus veiksmigi rezervejat: " + selectedCar);
+        System.out.println("Rezervation successful of " + selectedCar);
     }
 }

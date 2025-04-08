@@ -6,7 +6,7 @@ import java.util.*;
 public class CarLookup {
     private List<Car> cars;
     private List<Car> takenCars;
-    private final String takenCarsFile = "C:\\Users\\reinc\\Documents\\Vadim projekts\\AutoNoma\\data\\taken_cars.csv";
+    private final String takenCarsFile = "data\\taken_cars.csv";
 
     public CarLookup(String filePath) {
         this.cars = readCarsFromCSV(filePath);
@@ -34,7 +34,7 @@ public class CarLookup {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Kļūda lasot CSV failu: " + e.getMessage());
+            System.out.println("Problem reading data file: " + e.getMessage());
         }
         return cars;
     }
@@ -63,12 +63,12 @@ public class CarLookup {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(takenCarsFile, true))) {
             bw.write(car.getMarka() + "," + car.getModelis() + "," + car.getTips() + "," + car.getGads() + "," + car.getStundasMaksa());
             bw.newLine();
-            System.out.println("Rezervacija veiksmiga: " + car);
+            System.out.println("Reservation successful " + car);
 
             takenCars.add(car);
 
         } catch (IOException e) {
-            System.out.println("Kluda saglabajot rezerveto automasinu: " + e.getMessage());
+            System.out.println("There was a problem saving the rezervation:  " + e.getMessage());
         }
     }
 }
