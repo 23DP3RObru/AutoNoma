@@ -16,18 +16,21 @@ public class App {
     }
 
     public static boolean validData(String filename, String categoryToCheck, int column) { // DATU PARBAUDE ATKARIBA NO KATEGORIJAS
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
 
-            br.readLine();
+            br.readLine(); // Skip the header
 
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split(", ");
                 
-                String category = columns[column];
-                
-                if (category.equalsIgnoreCase(categoryToCheck)) {
-                    return true;
+                // Ensure the array has enough elements
+                if (columns.length > column) {
+                    String category = columns[column];
+                    
+                    if (category.equalsIgnoreCase(categoryToCheck)) {
+                        return true;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -141,17 +144,20 @@ public class App {
             System.out.println("This email has not been previously registered. Try registering.");
 
         } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lEmail, 1)) {
-            System.out.print("Password: ");
-            String lPassword = scanner.nextLine();
-            
-            while (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
-                System.out.println("The password you have entered looks to be incorrect, try again.");
+            while (true) {
+                System.out.print("Password: ");
+                String lPassword = scanner.nextLine();
 
-                if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
-                    System.out.println("Successfuly registered!");
+                if (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
+                    System.out.println("The password you have entered looks to be incorrect, try again.");
+                    
+                } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
+                    System.out.println("You have successfully logged in!"); // LIETOTĀJS PIERAKSTĪJIES VEIKSMĪGI
+                    break;
                 }
+                
+                scanner.close();
             }
-            scanner.close();
         
         }
     }
