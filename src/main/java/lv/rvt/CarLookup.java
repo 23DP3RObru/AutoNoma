@@ -1,20 +1,27 @@
 package lv.rvt;
+
 import java.io.*;
 import java.util.*;
 
 public class CarLookup {
     private List<Car> cars;
+    private List<Car> takenCars;
+    private final String takenCarsFile = "data\\taken_cars.csv";
 
     public CarLookup(String filePath) {
         this.cars = readCarsFromCSV(filePath);
+        this.takenCars = readCarsFromCSV(takenCarsFile);
     }
 
     private List<Car> readCarsFromCSV(String filePath) {
         List<Car> cars = new ArrayList<>();
-        String line;
+        File file = new File(filePath);
+
+        if (!file.exists()) return cars;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             br.readLine();
+            String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length == 5) {
@@ -27,27 +34,41 @@ public class CarLookup {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Kluda lasot CSV failu: " + e.getMessage());
+            System.out.println("Problem reading data file: " + e.getMessage());
         }
         return cars;
     }
 
+    public Set<String> getUniqueCarMakes() {
+        Set<String> uniqueMakes = new HashSet<>();
+        for (Car car : cars) {
+            if (!takenCars.contains(car)) {
+                uniqueMakes.add(car.getMarka());
+            }
+        }
+        return uniqueMakes;
+    }
 
     public List<Car> filterCarsByMake(String make) {
         List<Car> result = new ArrayList<>();
         for (Car car : cars) {
-            if (car.getMarka().equalsIgnoreCase(make)) {
+            if (car.getMarka().equalsIgnoreCase(make) && !takenCars.contains(car)) {
                 result.add(car);
             }
         }
         return result;
     }
-    public Set<String> getUniqueCarMakes() {
-        Set<String> uniqueMakes = new HashSet<>();
-        for (Car car : cars) {
-            uniqueMakes.add(car.getMarka());
+
+    public void markCarAsTaken(Car car) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(takenCarsFile, true))) {
+            bw.write(car.getMarka() + "," + car.getModelis() + "," + car.getTips() + "," + car.getGads() + "," + car.getStundasMaksa());
+            bw.newLine();
+            System.out.println("Reservation successful " + car);
+
+            takenCars.add(car);
+
+        } catch (IOException e) {
+            System.out.println("There was a problem saving the rezervation:  " + e.getMessage());
         }
-        return uniqueMakes;
-    }}
-
-
+    }
+}
