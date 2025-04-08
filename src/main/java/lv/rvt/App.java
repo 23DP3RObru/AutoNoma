@@ -137,17 +137,17 @@ public class App {
         if (lEmail.isEmpty()) {
             System.out.println("You left the email space blank.");
 
-        } else if (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", email, 1)) {
+        } else if (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lEmail, 1)) {
             System.out.println("This email has not been previously registered. Try registering.");
 
-        } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", email, 1)) {
+        } else if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lEmail, 1)) {
             System.out.print("Password: ");
             String lPassword = scanner.nextLine();
             
-            while (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", password, 2)) {
+            while (!validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
                 System.out.println("The password you have entered looks to be incorrect, try again.");
 
-                if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", password, 2)) {
+                if (validData("C:\\Users\\emils\\AutoNoma\\data\\loginCredentials.csv", lPassword, 2)) {
                     System.out.println("Successfuly registered!");
                 }
             }
