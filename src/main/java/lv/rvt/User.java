@@ -1,27 +1,35 @@
 package lv.rvt;
 
-import java.util.*;
-
 public class User {
-    private float bilance;
+    private float balance;
     private String name;
     private String surname;
     private int phoneNumber;
     private int identityNumber;
     
-    public User(float bilance, String name, String surname, int phoneNumber, int identityNumber) {
-        this.bilance = bilance;
+    public User(float balance, String name, String surname, int phoneNumber, int identityNumber) {
+        this.balance = balance;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.identityNumber = identityNumber;
     }
-
-    public float moneyAddition(float amount) {
-        return this.bilance + amount;
+    
+    public float getBalance() {
+        return balance;
     }
-
-    public float moneyDeduction(float amount) {
-        return this.bilance - amount;
+    
+    public void addFunds(float amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+    
+    public boolean deductFunds(float amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            return true;
+        }
+        return false;
     }
 }
