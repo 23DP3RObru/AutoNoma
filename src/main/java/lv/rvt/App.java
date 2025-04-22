@@ -27,13 +27,16 @@ public class App {
     public boolean register() {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.print("Enter username: ");
+        System.out.println("+----------------------------------------+");
+        System.out.println("|              Registration              |");
+        System.out.println("+----------------------------------------+");
+        System.out.print("  Enter username: ");
         String username = scanner.nextLine().trim();
         
-        System.out.print("Enter email: ");
+        System.out.print("  Enter email: ");
         String email = scanner.nextLine().trim();
         
-        System.out.print("Enter password: ");
+        System.out.print("  Enter password: ");
         String password = scanner.nextLine().trim();
         
         if (!validateRegistration(username, email, password)) {
@@ -52,9 +55,13 @@ public class App {
     
     public User login() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Email: ");
+
+        System.out.println("+----------------------------------------+");
+        System.out.println("|                 Login                  |");
+        System.out.println("+----------------------------------------+");
+        System.out.print("  Email: ");
         String email = scanner.nextLine().trim();
-        System.out.print("Password: ");
+        System.out.print("  Password: ");
         String password = scanner.nextLine().trim();
         
         try (BufferedReader br = new BufferedReader(new FileReader(credentialsFile))) {
@@ -65,7 +72,7 @@ public class App {
                 String[] parts = line.split(", ");
                 if (parts.length >= 3 && parts[1].equalsIgnoreCase(email)) {
                     if (parts[2].equals(password)) {
-                        System.out.println("Login successful!");
+                        System.out.println("  Login successful!");
                         return new User(100.00f, "Default", "User", 0, 0);
                     }
                     System.out.println("Error: Incorrect password!");

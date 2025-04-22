@@ -11,8 +11,6 @@ public class Main {
         App authSystem = new App(CREDENTIALS_FILE);
         CarService carService = new CarService(CARS_FILE);
         
-        System.out.println("=== Car Rental System ===");
-        
 
         User currentUser = handleAuthentication(scanner, authSystem);
         if (currentUser == null) {
@@ -28,19 +26,31 @@ public class Main {
     
     private static User handleAuthentication(Scanner scanner, App authSystem) {
         while (true) {
-            System.out.println("\n1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("Choose option: ");
+            // System.out.println("\n1. Login");
+            // System.out.println("2. Register");
+            // System.out.println("3. Exit");
+            // System.out.print("Choose option: ");
             
+            // String choice = scanner.nextLine();
+            
+            System.out.println("+----------------------------------------+");
+            System.out.println("|          WELCOME TO RE-AUTO            |");
+            System.out.println("+----------------------------------------+");
+            System.out.println("| To access our app you need to register |");
+            System.out.println("| or log in if you have an already       |");
+            System.out.println("| existing account.                      |");
+            System.out.println("|                                        |");
+            System.out.println("| Do you wish to register {R}            |");
+            System.out.println("| or log in {L}? (Upper case sensitive!) |");
+            System.out.print("  ");
             String choice = scanner.nextLine();
-            
+
             switch (choice) {
-                case "1":
+                case "L":
                     User user = authSystem.login();
                     if (user != null) return user;
                     break;
-                case "2":
+                case "R":
                     if (authSystem.register()) {
                         System.out.println("Please login with your new credentials");
                     }
