@@ -2,6 +2,7 @@ package lv.rvt;
 
 import java.util.Scanner;
 
+
 public class Main {
     private static final String CARS_FILE = "data/masinas.csv";
     private static final String CREDENTIALS_FILE = "data/loginCredentials.csv";
@@ -14,7 +15,7 @@ public class Main {
 
         User currentUser = handleAuthentication(scanner, authSystem);
         if (currentUser == null) {
-            System.out.println("Authentication failed. Exiting...");
+            System.out.println("Authentication " + ConsoleColors.RED + "failed" + ConsoleColors.RESET + ". Exiting...");
             scanner.close();
             return;
         }
@@ -34,7 +35,7 @@ public class Main {
             // String choice = scanner.nextLine();
             
             System.out.println("+----------------------------------------+");
-            System.out.println("|          WELCOME TO RE-AUTO            |");
+            System.out.println("|                " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-AUTO                 |");
             System.out.println("+----------------------------------------+");
             System.out.println("| To access our app you need to register |");
             System.out.println("| or log in if you have an already       |");
@@ -66,11 +67,16 @@ public class Main {
     private static void runMainMenu(Scanner scanner, CarService carService, User user) {
         boolean running = true;
         while (running) {
-            System.out.println("\n=== Main Menu ===");
-            System.out.println("1. Search available cars");
-            System.out.println("2. Check balance");
-            System.out.println("3. Logout");
-            System.out.print("Choose option: ");
+            System.out.println("\n+--------------------------------------------------------------------------------+");
+            System.out.println("| " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-Auto car rental services                                                    |");
+            System.out.println("| [PRINTS USERNAME HERE]");
+            System.out.println("|                                                                                |");
+            System.out.println("+---------+-------------+------------+-------------------------------------------+");
+            System.out.println("| 1. Auto |  2." + ConsoleColors.GREEN_BOLD_BRIGHT + " Balance" + ConsoleColors.RESET + " | 3." + ConsoleColors.RED_BOLD_BRIGHT +" Log out" + ConsoleColors.RESET + " |                                           |");
+            System.out.println("+---------+-------------+------------+-------------------------------------------+");
+            System.out.println("|                                                                                |");
+            System.out.println("| What section do you want to go to? (Auto {1}, Balance {2} or Log out {3}?)     |");
+            System.out.print("| ");
             
             String choice = scanner.nextLine();
             
@@ -79,14 +85,15 @@ public class Main {
                     carService.searchAndDisplayCars();
                     break;
                 case "2":
-                    System.out.printf("Your balance: %.2f EUR%n", user.getBalance());
+                    System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
                     break;
                 case "3":
                     running = false;
-                    System.out.println("Logged out successfully.");
+                    System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Logged out successfully." + ConsoleColors.RESET);
                     break;
                 default:
-                    System.out.println("Invalid option!");
+                    System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+                    break;
             }
         }
     }

@@ -34,7 +34,7 @@ public class CarLookup {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Problem reading data file: " + e.getMessage());
+            System.out.println(ConsoleColors.RED + "Problem reading data file: " + e.getMessage() + ConsoleColors.RESET);
         }
         return cars;
     }
@@ -63,12 +63,12 @@ public class CarLookup {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(takenCarsFile, true))) {
             bw.write(car.getMarka() + "," + car.getModelis() + "," + car.getTips() + "," + car.getGads() + "," + car.getStundasMaksa());
             bw.newLine();
-            System.out.println("Reservation successful " + car);
+            System.out.println(ConsoleColors.GREEN + "Reservation successful " + car + ConsoleColors.RESET);
 
             takenCars.add(car);
 
         } catch (IOException e) {
-            System.out.println("There was a problem saving the rezervation:  " + e.getMessage());
+            System.out.println(ConsoleColors.CYAN + "There was a problem saving the rezervation:  " + e.getMessage() + ConsoleColors.RESET);
         }
     }
 }

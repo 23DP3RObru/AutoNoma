@@ -16,13 +16,15 @@ public class CarService {
     public void searchAndDisplayCars() {
         Set<String> availableMakes = carLookup.getUniqueCarMakes();
         if (availableMakes.isEmpty()) {
-            System.out.println("This vehicle is not available.");
+            System.out.println("This vehicle is" + ConsoleColors.RED + " not available" + ConsoleColors.RESET + ".");
             return;
         }
 
-        System.out.println("Available car makes:");
+        System.out.println("+-------------------------+");
+        System.out.println("| Choose your car make:   |");
+        System.out.println("+-------------------------+");
         for (String make : availableMakes) {
-            System.out.println("- " + make);
+            System.out.println(" - " + make);
         }
 
         System.out.print("\nPlease enter car make you wish to select: ");
@@ -34,7 +36,9 @@ public class CarService {
             return;
         }
 
-        System.out.println("\nAtrastas automasinas ar marku: " + makeInput);
+        System.out.println("+-------------------------------------------------+");
+        System.out.println("  Cars found with make - " + makeInput);
+        System.out.println("+-------------------------------------------------+");
         for (int i = 0; i < filteredCars.size(); i++) {
             System.out.println((i + 1) + ". " + filteredCars.get(i));
         }
@@ -44,16 +48,16 @@ public class CarService {
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
             if (choice < 0 || choice >= filteredCars.size()) {
-                System.out.println("Not an option.");
+                System.out.println(ConsoleColors.RED + "Not" + ConsoleColors.RESET + " an option.");
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Enter a suitable number.");
+            System.out.println(ConsoleColors.RED + "Enter a suitable number." + ConsoleColors.RESET);
             return;
         }
 
         Car selectedCar = filteredCars.get(choice);
         carLookup.markCarAsTaken(selectedCar);
-        System.out.println("Rezervation successful of " + selectedCar);
+        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Rezervation successful of " + selectedCar + ConsoleColors.RESET);
     }
 }
