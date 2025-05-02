@@ -40,7 +40,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return gads + " " + marka + " " + modelis + " (" + tips + ") - " + stundasMaksa + " eiro/stunda";
+        return gads + " " + marka + " " + modelis + " (" + tips + ") - " + stundasMaksa + " euro/hour";
     }
 
 

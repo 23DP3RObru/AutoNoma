@@ -7,9 +7,12 @@ public class Main {
     private static final String CREDENTIALS_FILE = "data/loginCredentials.csv";
     
     public static void main(String[] args) {
+        String filePath = "C:\\Users\\reinc\\Documents\\Vadim projekts\\AutoNoma\\data\\masinas.csv";
+
+
         Scanner scanner = new Scanner(System.in);
         App authSystem = new App(CREDENTIALS_FILE);
-        CarService carService = new CarService(CARS_FILE);
+        CarService carService = new CarService(filePath);
         
         System.out.println("=== Car Rental System ===");
         

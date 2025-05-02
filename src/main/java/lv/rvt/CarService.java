@@ -3,6 +3,7 @@ package lv.rvt;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Comparator;
 
 public class CarService {
     private CarLookup carLookup;
@@ -34,7 +35,33 @@ public class CarService {
             return;
         }
 
-        System.out.println("\nAtrastas automasinas ar marku: " + makeInput);
+        System.out.println("\nHow would you like to sort the cars?");
+        System.out.println("1. A-Z (by model)");
+        System.out.println("2. Z-A (by model)");
+        System.out.println("3. Cheapest to most expensive");
+        System.out.println("4. Most expensive to cheapest");
+        System.out.print("Enter your choice (1-4): ");
+        
+        String sortChoice = scanner.nextLine().trim();
+        
+        switch (sortChoice) {
+            case "1":
+                filteredCars.sort(Comparator.comparing(Car::getModelis));
+                break;
+            case "2":
+                filteredCars.sort(Comparator.comparing(Car::getModelis).reversed());
+                break;
+            case "3":
+                filteredCars.sort(Comparator.comparingDouble(Car::getStundasMaksa));
+                break;
+            case "4":
+                filteredCars.sort(Comparator.comparingDouble(Car::getStundasMaksa).reversed());
+                break;
+            default:
+                System.out.println("Invalid choice. Showing unsorted list.");
+        }
+
+        System.out.println("\nAvailable cars from this make: " + makeInput);
         for (int i = 0; i < filteredCars.size(); i++) {
             System.out.println((i + 1) + ". " + filteredCars.get(i));
         }
