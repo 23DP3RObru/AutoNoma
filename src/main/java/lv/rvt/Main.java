@@ -3,11 +3,11 @@ package lv.rvt;
 import java.util.Scanner;
 
 public class Main {
-    private static final String CARS_FILE = "data/masinas.csv";
-    private static final String CREDENTIALS_FILE = "data/loginCredentials.csv";
+    private static final String CARS_FILE = "data\\masinas.csv";
+    private static final String CREDENTIALS_FILE = "data\\loginCredentials.csv";
     
     public static void main(String[] args) {
-        String filePath = "C:\\Users\\reinc\\Documents\\Vadim projekts\\AutoNoma\\data\\masinas.csv";
+        String filePath = "data\\masinas.csv";
 
 
         Scanner scanner = new Scanner(System.in);
