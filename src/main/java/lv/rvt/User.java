@@ -1,12 +1,21 @@
 package lv.rvt;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class User {
     private String username;
+    private String email;
+    private String password;
     private float balance;
 
-    public User(String username) {
+    public User(String username, String email, String password, float balance) {
         this.username = username;
-        this.balance = 0.0f; // default balance starts at 0
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
     }
 
     public String getUsername() {
@@ -51,10 +60,15 @@ public class User {
                     firstLine = false;
                     continue;
                 }
-
-                String[] data = line.split(csvSplitBy);
+        
+                String[] data = line.split(", ");
+                
                 String username = data[0].trim();
-                User user = new User(username);
+                String email = data[1].trim();
+                String password = data[2].trim();
+                float balance = Float.parseFloat(data[3].trim()); // Make sure the balance exists
+            
+                User user = new User(username, email, password, balance);
                 users.add(user);
             }
         } catch (IOException e) {

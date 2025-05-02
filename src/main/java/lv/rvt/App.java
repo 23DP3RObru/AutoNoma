@@ -44,7 +44,7 @@ public class App {
         }
         
         try (PrintWriter out = new PrintWriter(new FileWriter(credentialsFile, true))) {
-            out.println(username + ", " + email + ", " + password);
+            out.println(username + ", " + email + ", " + password + ", " + 0.0f);
             System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Registration successful!"+ ConsoleColors.RESET);
             return true;
         } catch (IOException e) {
@@ -55,7 +55,7 @@ public class App {
     
     public User login() {
         Scanner scanner = new Scanner(System.in);
-
+    
         System.out.println("+----------------------------------------+");
         System.out.println("|                 " + ConsoleColors.GREEN + "Log" + ConsoleColors.RESET + "-in                  |");
         System.out.println("+----------------------------------------+");
@@ -63,23 +63,30 @@ public class App {
         String email = scanner.nextLine().trim();
         System.out.print("  Password: ");
         String password = scanner.nextLine().trim();
-        
+    
         try (BufferedReader br = new BufferedReader(new FileReader(credentialsFile))) {
             br.readLine();
-            
+    
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(", ");
-                if (parts.length >= 3 && parts[1].equalsIgnoreCase(email)) {
-                    if (parts[2].equals(password)) {
-                        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "  Login successful!"+ ConsoleColors.RESET);
-                        return new User(line);
+                
+                if (parts.length >= 3 && parts[1].trim().equalsIgnoreCase(email)) {
+                    if (parts[2].trim().equals(password)) {
+                        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "  Login successful!" + ConsoleColors.RESET);
+                        
+                        String username = parts[0].trim();
+                        String userEmail = parts[1].trim();
+                        String userPassword = parts[2].trim();
+                        float balance = parts.length > 3 ? Float.parseFloat(parts[3].trim()) : 0.0f;
+    
+                        return new User(username, userEmail, userPassword, balance);
                     }
-                    System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error: Incorrect password!");
+                    System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error: Incorrect password!" + ConsoleColors.RESET);
                     return null;
                 }
             }
-            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error: Email not found!"+ ConsoleColors.RESET);
+            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error: Email not found!" + ConsoleColors.RESET);
             return null;
         } catch (IOException e) {
             System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error reading credentials: " + e.getMessage() + ConsoleColors.RESET);
