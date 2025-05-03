@@ -21,7 +21,7 @@ public class Main {
         }
         
 
-        runMainMenu(scanner, carService, currentUser);
+        runMainMenu(scanner, carService, currentUser, authSystem);
         scanner.close();
     }
     
@@ -64,7 +64,7 @@ public class Main {
         }
     }
     
-    private static void runMainMenu(Scanner scanner, CarService carService, User user) {
+    private static void runMainMenu(Scanner scanner, CarService carService, User user, App authSystem) {
         boolean running = true;
         while (running) {
             System.out.println("\n+--------------------------------------------------------------------------------+");
@@ -86,7 +86,31 @@ public class Main {
                     break;
                 case "2":
                     System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+                    System.out.print("Would you like to top up your balance? (yes/no): ");
+                    String topUpChoice = scanner.nextLine();
+                    if (topUpChoice.equalsIgnoreCase("yes")) {
+                        System.out.print("Enter amount to top up: ");
+                        float amount;
+                        try {
+                            amount = Float.parseFloat(scanner.nextLine());
+                            if (amount > 0) {
+                                user.addFunds(amount);
+                                authSystem.updateUserBalance(user);
+                                System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+
+                            } else {
+                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid amount!" + ConsoleColors.RESET);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid input!" + ConsoleColors.RESET);
+                        }
+                    } else if (topUpChoice.equalsIgnoreCase("no")) {
+                        System.out.println(ConsoleColors.CYAN_BOLD_BRIGHT + "You have chosen not to top up your balance." + ConsoleColors.RESET);
+                    } else {
+                        System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+                    }
                     break;
+
                 case "3":
                     running = false;
                     System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Logged out successfully." + ConsoleColors.RESET);

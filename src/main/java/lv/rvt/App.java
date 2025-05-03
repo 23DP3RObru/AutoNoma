@@ -140,4 +140,36 @@ public class App {
                      .matcher(email)
                      .matches();
     }
+
+    public void updateUserBalance(User user) {
+        File inputFile = new File(credentialsFile);
+        List<String> updatedLines = new ArrayList<>();
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            String header = reader.readLine(); // keep the header
+            updatedLines.add(header);
+    
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 4 && parts[0].equals(user.getUsername())) {
+                    // update this line with the new balance
+                    String newLine = user.getUsername() + ", " + parts[1] + ", " + parts[2] + ", " + user.getBalance();
+                    updatedLines.add(newLine);
+                } else {
+                    updatedLines.add(line);
+                }
+            }
+    
+            // overwrite the file
+            try (PrintWriter writer = new PrintWriter(new FileWriter(inputFile))) {
+                for (String updatedLine : updatedLines) {
+                    writer.println(updatedLine);
+                }
+            }
+    
+        } catch (IOException e) {
+            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error updating balance: " + e.getMessage() + ConsoleColors.RESET);
+        }
+    }
 }
