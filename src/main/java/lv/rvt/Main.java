@@ -69,7 +69,7 @@ public class Main {
         while (running) {
             System.out.println("\n+--------------------------------------------------------------------------------+");
             System.out.println("| " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-Auto car rental services                                                    |");
-            System.out.println("| [PRINTS USERNAME HERE]");
+            System.out.println("| Welcome back " + ConsoleColors.CYAN + user.getUsername() + ConsoleColors.RESET);
             System.out.println("|                                                                                |");
             System.out.println("+---------+-------------+------------+-------------------------------------------+");
             System.out.println("| 1. Auto |  2." + ConsoleColors.GREEN_BOLD_BRIGHT + " Balance" + ConsoleColors.RESET + " | 3." + ConsoleColors.RED_BOLD_BRIGHT +" Log out" + ConsoleColors.RESET + " |                                           |");
