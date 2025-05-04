@@ -17,13 +17,15 @@ public class CarService {
     public void searchAndDisplayCars() {
         Set<String> availableMakes = carLookup.getUniqueCarMakes();
         if (availableMakes.isEmpty()) {
-            System.out.println("This vehicle is not available.");
+            System.out.println("This vehicle is" + ConsoleColors.RED + " not available" + ConsoleColors.RESET + ".");
             return;
         }
 
-        System.out.println("Available car makes:");
+        System.out.println("+-------------------------+");
+        System.out.println("| Choose your car make:   |");
+        System.out.println("+-------------------------+");
         for (String make : availableMakes) {
-            System.out.println("- " + make);
+            System.out.println(" - " + make);
         }
 
         System.out.print("\nPlease enter car make you wish to select: ");
@@ -31,19 +33,24 @@ public class CarService {
         List<Car> filteredCars = carLookup.filterCarsByMake(makeInput);
 
         if (filteredCars.isEmpty()) {
-            System.out.println("Unable to find this make: " + makeInput);
+            System.out.println(ConsoleColors.RED + "Unable to find this make: " + makeInput + ConsoleColors.RESET);
             return;
         }
 
-        System.out.println("\nHow would you like to sort the cars?");
-        System.out.println("1. A-Z (by model)");
-        System.out.println("2. Z-A (by model)");
-        System.out.println("3. Cheapest to most expensive");
-        System.out.println("4. Most expensive to cheapest");
+        // Ask user for sorting preference
+        System.out.println("\n+--------------------------------+");
+        System.out.println("| How would you like to sort?    |");
+        System.out.println("+--------------------------------+");
+        System.out.println("| 1. A-Z (by model)              |");
+        System.out.println("| 2. Z-A (by model)              |");
+        System.out.println("| 3. Cheapest to most expensive  |");
+        System.out.println("| 4. Most expensive to cheapest  |");
+        System.out.println("+--------------------------------+");
         System.out.print("Enter your choice (1-4): ");
         
         String sortChoice = scanner.nextLine().trim();
         
+        // Sort the cars based on user's choice
         switch (sortChoice) {
             case "1":
                 filteredCars.sort(Comparator.comparing(Car::getModelis));
@@ -58,10 +65,12 @@ public class CarService {
                 filteredCars.sort(Comparator.comparingDouble(Car::getStundasMaksa).reversed());
                 break;
             default:
-                System.out.println("Invalid choice. Showing unsorted list.");
+                System.out.println(ConsoleColors.YELLOW + "Invalid choice. Showing unsorted list." + ConsoleColors.RESET);
         }
 
-        System.out.println("\nAvailable cars from this make: " + makeInput);
+        System.out.println("\n+-------------------------------------------------+");
+        System.out.println("  Cars found with make - " + makeInput);
+        System.out.println("+-------------------------------------------------+");
         for (int i = 0; i < filteredCars.size(); i++) {
             System.out.println((i + 1) + ". " + filteredCars.get(i));
         }
@@ -71,16 +80,16 @@ public class CarService {
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
             if (choice < 0 || choice >= filteredCars.size()) {
-                System.out.println("Not an option.");
+                System.out.println(ConsoleColors.RED + "Not an option." + ConsoleColors.RESET);
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Enter a suitable number.");
+            System.out.println(ConsoleColors.RED + "Enter a suitable number." + ConsoleColors.RESET);
             return;
         }
 
         Car selectedCar = filteredCars.get(choice);
         carLookup.markCarAsTaken(selectedCar);
-        System.out.println("Rezervation successful of " + selectedCar);
+        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Reservation successful of " + selectedCar + ConsoleColors.RESET);
     }
 }

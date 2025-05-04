@@ -2,48 +2,56 @@ package lv.rvt;
 
 import java.util.Scanner;
 
+
 public class Main {
-    private static final String CARS_FILE = "data\\masinas.csv";
-    private static final String CREDENTIALS_FILE = "data\\loginCredentials.csv";
+    private static final String CARS_FILE = "data/masinas.csv";
+    private static final String CREDENTIALS_FILE = "data/loginCredentials.csv";
     
     public static void main(String[] args) {
-        String filePath = "data\\masinas.csv";
-
-
         Scanner scanner = new Scanner(System.in);
         App authSystem = new App(CREDENTIALS_FILE);
-        CarService carService = new CarService(filePath);
-        
-        System.out.println("=== Car Rental System ===");
+        CarService carService = new CarService(CARS_FILE);
         
 
         User currentUser = handleAuthentication(scanner, authSystem);
         if (currentUser == null) {
-            System.out.println("Authentication failed. Exiting...");
+            System.out.println("Authentication " + ConsoleColors.RED + "failed" + ConsoleColors.RESET + ". Exiting...");
             scanner.close();
             return;
         }
         
 
-        runMainMenu(scanner, carService, currentUser);
+        runMainMenu(scanner, carService, currentUser, authSystem);
         scanner.close();
     }
     
     private static User handleAuthentication(Scanner scanner, App authSystem) {
         while (true) {
-            System.out.println("\n1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("Choose option: ");
+            // System.out.println("\n1. Login");
+            // System.out.println("2. Register");
+            // System.out.println("3. Exit");
+            // System.out.print("Choose option: ");
             
+            // String choice = scanner.nextLine();
+            
+            System.out.println("+----------------------------------------+");
+            System.out.println("|                " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-AUTO                 |");
+            System.out.println("+----------------------------------------+");
+            System.out.println("| To access our app you need to register |");
+            System.out.println("| or log in if you have an already       |");
+            System.out.println("| existing account.                      |");
+            System.out.println("|                                        |");
+            System.out.println("| Do you wish to register {R}            |");
+            System.out.println("| or log in {L}? (Upper case sensitive!) |");
+            System.out.print("  ");
             String choice = scanner.nextLine();
-            
+
             switch (choice) {
-                case "1":
+                case "L":
                     User user = authSystem.login();
                     if (user != null) return user;
                     break;
-                case "2":
+                case "R":
                     if (authSystem.register()) {
                         System.out.println("Please login with your new credentials");
                     }
@@ -56,14 +64,19 @@ public class Main {
         }
     }
     
-    private static void runMainMenu(Scanner scanner, CarService carService, User user) {
+    private static void runMainMenu(Scanner scanner, CarService carService, User user, App authSystem) {
         boolean running = true;
         while (running) {
-            System.out.println("\n=== Main Menu ===");
-            System.out.println("1. Search available cars");
-            System.out.println("2. Check balance");
-            System.out.println("3. Logout");
-            System.out.print("Choose option: ");
+            System.out.println("\n+--------------------------------------------------------------------------------+");
+            System.out.println("| " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-Auto car rental services                                                    |");
+            System.out.println("| Welcome back " + ConsoleColors.CYAN + user.getUsername() + ConsoleColors.RESET);
+            System.out.println("|                                                                                |");
+            System.out.println("+---------+-------------+------------+-------------------------------------------+");
+            System.out.println("| 1. Auto |  2." + ConsoleColors.GREEN_BOLD_BRIGHT + " Balance" + ConsoleColors.RESET + " | 3." + ConsoleColors.RED_BOLD_BRIGHT +" Log out" + ConsoleColors.RESET + " |                                           |");
+            System.out.println("+---------+-------------+------------+-------------------------------------------+");
+            System.out.println("|                                                                                |");
+            System.out.println("| What section do you want to go to? (Auto {1}, Balance {2} or Log out {3}?)     |");
+            System.out.print("| ");
             
             String choice = scanner.nextLine();
             
@@ -72,14 +85,39 @@ public class Main {
                     carService.searchAndDisplayCars();
                     break;
                 case "2":
-                    System.out.printf("Your balance: %.2f EUR%n", user.getBalance());
+                    System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+                    System.out.print("Would you like to top up your balance? (yes/no): ");
+                    String topUpChoice = scanner.nextLine();
+                    if (topUpChoice.equalsIgnoreCase("yes")) {
+                        System.out.print("Enter amount to top up: ");
+                        float amount;
+                        try {
+                            amount = Float.parseFloat(scanner.nextLine());
+                            if (amount > 0) {
+                                user.addFunds(amount);
+                                authSystem.updateUserBalance(user);
+                                System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+
+                            } else {
+                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid amount!" + ConsoleColors.RESET);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid input!" + ConsoleColors.RESET);
+                        }
+                    } else if (topUpChoice.equalsIgnoreCase("no")) {
+                        System.out.println(ConsoleColors.CYAN_BOLD_BRIGHT + "You have chosen not to top up your balance." + ConsoleColors.RESET);
+                    } else {
+                        System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+                    }
                     break;
+
                 case "3":
                     running = false;
-                    System.out.println("Logged out successfully.");
+                    System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Logged out successfully." + ConsoleColors.RESET);
                     break;
                 default:
-                    System.out.println("Invalid option!");
+                    System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+                    break;
             }
         }
     }
