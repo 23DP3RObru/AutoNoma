@@ -14,7 +14,7 @@ public class CarService {
         this.scanner = new Scanner(System.in);
     }
 
-    public void searchAndDisplayCars() {
+    public void searchAndDisplayCars(User user) {
         Set<String> availableMakes = carLookup.getUniqueCarMakes();
         if (availableMakes.isEmpty()) {
             System.out.println("This vehicle is" + ConsoleColors.RED + " not available" + ConsoleColors.RESET + ".");
@@ -82,6 +82,9 @@ public class CarService {
             if (choice < 0 || choice >= filteredCars.size()) {
                 System.out.println(ConsoleColors.RED + "Not an option." + ConsoleColors.RESET);
                 return;
+            } else if (user.getBalance() < filteredCars.get(choice).getStundasMaksa()) {
+                System.out.println(ConsoleColors.RED + "Not enough funds." + ConsoleColors.RESET);
+                return;
             }
         } catch (NumberFormatException e) {
             System.out.println(ConsoleColors.RED + "Enter a suitable number." + ConsoleColors.RESET);
@@ -91,5 +94,7 @@ public class CarService {
         Car selectedCar = filteredCars.get(choice);
         carLookup.markCarAsTaken(selectedCar);
         System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Reservation successful of " + selectedCar + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "You have been charged " + selectedCar.getStundasMaksa() + " EUR." + ConsoleColors.RESET);
+        user.deductFunds(selectedCar.getStundasMaksa());
     }
 }

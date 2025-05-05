@@ -32,7 +32,7 @@ public class User {
         }
     }
 
-    public boolean deductFunds(float amount) {
+    public boolean deductFunds(double amount) {
         if (amount > 0 && balance >= amount) {
             balance -= amount;
             return true;

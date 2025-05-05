@@ -82,7 +82,7 @@ public class Main {
             
             switch (choice) {
                 case "1":
-                    carService.searchAndDisplayCars();
+                    carService.searchAndDisplayCars(user);
                     break;
                 case "2":
                     System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
