@@ -86,9 +86,58 @@ public class Main {
                     break;
                 case "2":
                     System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
-                    System.out.print("Would you like to top up your balance? (yes/no): ");
+                    System.out.print("Would you like to top up your balance or change the currency? (yes/no): ");
                     String topUpChoice = scanner.nextLine();
                     if (topUpChoice.equalsIgnoreCase("yes")) {
+                        System.out.println("+---------------------+");
+                        System.out.println("| 1. Top-up           |");
+                        System.out.println("| 2. Change currency  |");
+                        System.out.println("+---------------------+");
+
+                        Integer MoneyChoice = Integer.valueOf(scanner.nextLine());
+
+                        if (MoneyChoice == 1) {
+                            System.out.print("Enter amount to top up: ");
+                            float amount;
+                            try {
+                                amount = Float.parseFloat(scanner.nextLine());
+                                if (amount > 0) {
+                                    user.addFunds(amount);
+                                    authSystem.updateUserBalance(user);
+                                    System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+
+                                } else {
+                                    System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid amount!" + ConsoleColors.RESET);
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid input!" + ConsoleColors.RESET);
+                            }
+                        } else if (MoneyChoice == 2) {
+                            System.out.println("+----------------------------+");
+                            System.out.println("| Available currencies       |");
+                            System.out.println("+----------------------------+");
+                            System.out.println("| 1. USD (American dollars)  |");
+                            System.out.println("| 2. CAD (Canadian dollars)  |");
+                            System.out.println("| 3. EURO (European euros)   |");
+                            System.out.println("| 4. AUD (Australian dollar) |");
+                            System.out.println("+----------------------------+");
+
+                            Integer CurrencyChoice = Integer.valueOf(scanner.nextLine());
+                            if (CurrencyChoice == 1) {
+                                user.setCurrency("USD");
+                            } else if (CurrencyChoice == 2) {
+                                
+                                user.setCurrency("CAD");
+                            } else if (CurrencyChoice == 3) {
+                                user.setCurrency("EUR");
+                            } else if (CurrencyChoice == 4) {
+                                user.setCurrency("AUD");
+                            } else {
+                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid currency choice!" + ConsoleColors.RESET);
+                            }   
+                        } else {
+                            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+                        }
                         System.out.print("Enter amount to top up: ");
                         float amount;
                         try {

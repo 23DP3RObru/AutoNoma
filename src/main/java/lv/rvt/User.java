@@ -46,6 +46,29 @@ public class User {
         }
     }
 
+    public void setCurrency(String currency) {
+        if (currency.equalsIgnoreCase("USD")) {
+
+            System.out.println("Currency set to American dollars.");
+
+        } else if (currency.equalsIgnoreCase("CAD")) {
+
+            System.out.println("Currency set to Canadian dollars.");
+
+        } else if (currency.equalsIgnoreCase("EUR")) {
+
+            System.out.println("Currency set to European euros.");
+
+        } else if (currency.equalsIgnoreCase("AUD")) {
+
+            System.out.println("Currency set to Australian dollars.");
+
+        } else {
+            
+            System.out.println("Invalid currency. Defaulting to Euro.");
+        }
+    }
+
     public static void main(String[] args) {
         String csvFile = "users.csv";
         String line;

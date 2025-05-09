@@ -57,7 +57,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
     
         System.out.println("+----------------------------------------+");
-        System.out.println("|                 " + ConsoleColors.GREEN + "Log" + ConsoleColors.RESET + "-in                  |");
+        System.out.println("|                " + ConsoleColors.GREEN + "Log" + ConsoleColors.RESET + "-in                  |");
         System.out.println("+----------------------------------------+");
         System.out.print("  Email: ");
         String email = scanner.nextLine().trim();
@@ -146,14 +146,13 @@ public class App {
         List<String> updatedLines = new ArrayList<>();
     
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-            String header = reader.readLine(); // keep the header
+            String header = reader.readLine();
             updatedLines.add(header);
     
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
                 if (parts.length >= 4 && parts[0].equals(user.getUsername())) {
-                    // update this line with the new balance
                     String newLine = user.getUsername() + ", " + parts[1] + ", " + parts[2] + ", " + user.getBalance();
                     updatedLines.add(newLine);
                 } else {
@@ -161,7 +160,6 @@ public class App {
                 }
             }
     
-            // overwrite the file
             try (PrintWriter writer = new PrintWriter(new FileWriter(inputFile))) {
                 for (String updatedLine : updatedLines) {
                     writer.println(updatedLine);
