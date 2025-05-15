@@ -88,7 +88,7 @@ public class User {
                 String username = data[0].trim();
                 String email = data[1].trim();
                 String password = data[2].trim();
-                float balance = Float.parseFloat(data[3].trim()); // Make sure the balance exists
+                float balance = Float.parseFloat(data[3].trim());
             
                 String currency = "EUR"; // Noklusejuma valūta
                 if (data.length > 4) {

@@ -65,16 +65,17 @@ public class Main {
             System.out.println("| Welcome back " + ConsoleColors.CYAN + user.getUsername() + ConsoleColors.RESET);
             System.out.println("|                                                                                |");
             System.out.println("+---------+-------------+------------+-------------------------------------------+");
-            System.out.println("| 1. Auto |  2." + ConsoleColors.GREEN_BOLD_BRIGHT + " Balance" + ConsoleColors.RESET + " | 3." + ConsoleColors.RED_BOLD_BRIGHT +" Log out" + ConsoleColors.RESET + " |                                           |");
+            System.out.println("| 1. Auto |  2." + ConsoleColors.GREEN_BOLD_BRIGHT + " Balance" + ConsoleColors.RESET + " | 3." + ConsoleColors.RED_BOLD_BRIGHT +" Log out" + ConsoleColors.RESET + " | 4. Return Vehicle |");
             System.out.println("+---------+-------------+------------+-------------------------------------------+");
             System.out.println("|                                                                                |");
-            System.out.println("| What section do you want to go to? (Auto {1}, Balance {2} or Log out {3}?)     |");
+            System.out.println("| What section do you want to go to? (Auto {1}, Balance {2}, Log out {3}, Return {4}) |");
             System.out.print("| ");
             
             String choice = scanner.nextLine();
             
             switch (choice) {
                 case "1":
+                    carService.searchAndDisplayCars(user);
                     carService.searchAndDisplayCars(user);
                     break;
                 case "2":
@@ -144,10 +145,12 @@ public class Main {
                     running = false;
                     System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Logged out successfully." + ConsoleColors.RESET);
                     break;
+                case "4":
+                    carService.returnVehicle(user.getUsername());
+                    break;
                 default:
                     System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
                     break;
             }
         }
-    }
-}
+    }}
