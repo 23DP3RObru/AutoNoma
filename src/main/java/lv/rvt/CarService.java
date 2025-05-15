@@ -105,6 +105,9 @@ public class CarService {
             } else if (user.getBalance() < filteredCars.get(choice).getStundasMaksa()) {
                 System.out.println(ConsoleColors.RED + "Not enough funds." + ConsoleColors.RESET);
                 return;
+            } else if (user.getBalance() < filteredCars.get(choice).getStundasMaksa()) {
+                System.out.println(ConsoleColors.RED + "Not enough funds." + ConsoleColors.RESET);
+                return;
             }
         } catch (NumberFormatException e) {
             System.out.println(ConsoleColors.RED + "Enter a suitable number." + ConsoleColors.RESET);
