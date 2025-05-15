@@ -17,7 +17,6 @@ public class Car {
         this.stundasMaksa = stundasMaksa;
     }
 
-    // Getters
     public String getMarka() {
         return marka;
     }

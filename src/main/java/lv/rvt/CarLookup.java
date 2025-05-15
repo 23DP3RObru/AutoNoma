@@ -12,6 +12,9 @@ public class CarLookup {
         this.cars = readCarsFromCSV(filePath);
         this.takenCars = readCarsFromCSV(takenCarsFile);
     }
+    public List<Car> getTakenCars() {
+        return takenCars;
+    }
 
     private List<Car> readCarsFromCSV(String filePath) {
         List<Car> cars = new ArrayList<>();
@@ -71,4 +74,5 @@ public class CarLookup {
             System.out.println(ConsoleColors.CYAN + "There was a problem saving the rezervation:  " + e.getMessage() + ConsoleColors.RESET);
         }
     }
+    
 }

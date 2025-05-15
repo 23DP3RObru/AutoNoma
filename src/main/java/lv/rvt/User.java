@@ -32,7 +32,7 @@ public class User {
         }
     }
 
-    public boolean deductFunds(float amount) {
+    public boolean deductFunds(double amount) {
         if (amount > 0 && balance >= amount) {
             balance -= amount;
             return true;
@@ -43,6 +43,29 @@ public class User {
     public void setBalance(float newBalance) {
         if (newBalance >= 0) {
             this.balance = newBalance;
+        }
+    }
+
+    public void setCurrency(String currency) {
+        if (currency.equalsIgnoreCase("USD")) {
+
+            System.out.println("Currency set to American dollars.");
+
+        } else if (currency.equalsIgnoreCase("CAD")) {
+
+            System.out.println("Currency set to Canadian dollars.");
+
+        } else if (currency.equalsIgnoreCase("EUR")) {
+
+            System.out.println("Currency set to European euros.");
+
+        } else if (currency.equalsIgnoreCase("AUD")) {
+
+            System.out.println("Currency set to Australian dollars.");
+
+        } else {
+            
+            System.out.println("Invalid currency. Defaulting to Euro.");
         }
     }
 
@@ -66,7 +89,7 @@ public class User {
                 String username = data[0].trim();
                 String email = data[1].trim();
                 String password = data[2].trim();
-                float balance = Float.parseFloat(data[3].trim()); // Make sure the balance exists
+                float balance = Float.parseFloat(data[3].trim());
             
                 User user = new User(username, email, password, balance);
                 users.add(user);
@@ -75,12 +98,10 @@ public class User {
             e.printStackTrace();
         }
 
-        // Display users and test topping up
         for (User u : users) {
             System.out.println("Username: " + u.getUsername() + ", Balance: " + u.getBalance());
         }
 
-        // Example: Add funds
         if (!users.isEmpty()) {
             User firstUser = users.get(0);
             firstUser.addFunds(100.0f);
