@@ -27,13 +27,6 @@ public class Main {
     
     private static User handleAuthentication(Scanner scanner, App authSystem) {
         while (true) {
-            // System.out.println("\n1. Login");
-            // System.out.println("2. Register");
-            // System.out.println("3. Exit");
-            // System.out.print("Choose option: ");
-            
-            // String choice = scanner.nextLine();
-            
             System.out.println("+----------------------------------------+");
             System.out.println("|                " + ConsoleColors.GREEN + "RE" + ConsoleColors.RESET + "-AUTO                 |");
             System.out.println("+----------------------------------------+");
@@ -85,80 +78,67 @@ public class Main {
                     carService.searchAndDisplayCars(user);
                     break;
                 case "2":
-                    System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+                    System.out.printf("Your balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f %s%n" + ConsoleColors.RESET,
+                            user.getConvertedBalance(), user.getCurrency());
+
                     System.out.print("Would you like to top up your balance or change the currency? (yes/no): ");
                     String topUpChoice = scanner.nextLine();
+
                     if (topUpChoice.equalsIgnoreCase("yes")) {
                         System.out.println("+---------------------+");
                         System.out.println("| 1. Top-up           |");
                         System.out.println("| 2. Change currency  |");
                         System.out.println("+---------------------+");
 
-                        Integer MoneyChoice = Integer.valueOf(scanner.nextLine());
+                        String choiceInput = scanner.nextLine();
+                        try {
+                            int moneyChoice = Integer.parseInt(choiceInput);
 
-                        if (MoneyChoice == 1) {
-                            System.out.print("Enter amount to top up: ");
-                            float amount;
-                            try {
-                                amount = Float.parseFloat(scanner.nextLine());
+                            if (moneyChoice == 1) {
+                                System.out.print("Enter amount to top up: ");
+                                float amount = Float.parseFloat(scanner.nextLine());
+
                                 if (amount > 0) {
                                     user.addFunds(amount);
                                     authSystem.updateUserBalance(user);
-                                    System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
-
+                                    System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET,
+                                            user.getBalance());
                                 } else {
                                     System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid amount!" + ConsoleColors.RESET);
                                 }
-                            } catch (NumberFormatException e) {
-                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid input!" + ConsoleColors.RESET);
-                            }
-                        } else if (MoneyChoice == 2) {
-                            System.out.println("+----------------------------+");
-                            System.out.println("| Available currencies       |");
-                            System.out.println("+----------------------------+");
-                            System.out.println("| 1. USD (American dollars)  |");
-                            System.out.println("| 2. CAD (Canadian dollars)  |");
-                            System.out.println("| 3. EURO (European euros)   |");
-                            System.out.println("| 4. AUD (Australian dollar) |");
-                            System.out.println("+----------------------------+");
 
-                            Integer CurrencyChoice = Integer.valueOf(scanner.nextLine());
-                            if (CurrencyChoice == 1) {
-                                user.setCurrency("USD");
-                            } else if (CurrencyChoice == 2) {
-                                
-                                user.setCurrency("CAD");
-                            } else if (CurrencyChoice == 3) {
-                                user.setCurrency("EUR");
-                            } else if (CurrencyChoice == 4) {
-                                user.setCurrency("AUD");
-                            } else {
-                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid currency choice!" + ConsoleColors.RESET);
-                            }   
-                        } else {
-                            System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
-                        }
-                        System.out.print("Enter amount to top up: ");
-                        float amount;
-                        try {
-                            amount = Float.parseFloat(scanner.nextLine());
-                            if (amount > 0) {
-                                user.addFunds(amount);
-                                authSystem.updateUserBalance(user);
-                                System.out.printf("Your new balance: " + ConsoleColors.GREEN_BOLD_BRIGHT + "%.2f EUR%n" + ConsoleColors.RESET, user.getBalance());
+                            } else if (moneyChoice == 2) {
+                                System.out.println("+----------------------------+");
+                                System.out.println("| Available currencies       |");
+                                System.out.println("+----------------------------+");
+                                System.out.println("| 1. USD (American dollars)  |");
+                                System.out.println("| 2. CAD (Canadian dollars)  |");
+                                System.out.println("| 3. EUR (European euros)    |");
+                                System.out.println("| 4. AUD (Australian dollar) |");
+                                System.out.println("+----------------------------+");
 
+                                int currencyChoice = Integer.parseInt(scanner.nextLine());
+
+                                switch (currencyChoice) {
+                                    case 1 -> user.setCurrency("USD");
+                                    case 2 -> user.setCurrency("CAD");
+                                    case 3 -> user.setCurrency("EUR");
+                                    case 4 -> user.setCurrency("AUD");
+                                    default -> System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid currency choice!" + ConsoleColors.RESET);
+                                }
                             } else {
-                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid amount!" + ConsoleColors.RESET);
+                                System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
+
                             }
                         } catch (NumberFormatException e) {
                             System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid input!" + ConsoleColors.RESET);
                         }
                     } else if (topUpChoice.equalsIgnoreCase("no")) {
                         System.out.println(ConsoleColors.CYAN_BOLD_BRIGHT + "You have chosen not to top up your balance." + ConsoleColors.RESET);
+                    
                     } else {
                         System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Invalid option!" + ConsoleColors.RESET);
-                    }
-                    break;
+                    } break;
 
                 case "3":
                     running = false;
