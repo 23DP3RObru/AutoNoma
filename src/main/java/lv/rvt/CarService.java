@@ -29,6 +29,86 @@ public class CarService {
             }
         }
     }
+    private boolean hasReservation(String username) {
+        try (BufferedReader br = new BufferedReader(new FileReader(reservationsFile))) {
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0 && parts[0].equals(username)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(ConsoleColors.RED + "Error reading reservations: " + e.getMessage() + ConsoleColors.RESET);
+        }
+        return false;
+    }
+
+    private void handleReturnOption(User user) {
+        System.out.print("Would you like to return your current vehicle? (yes/no): ");
+        String choice = scanner.nextLine().trim();
+        if (choice.equalsIgnoreCase("yes")) {
+            returnVehicle(user.getUsername());
+        }
+    }
+
+    public void returnVehicle(String username) {
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+        Car returnedCar = null;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(reservationsFile))) {
+            String header = br.readLine();
+            lines.add(header);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 6 && parts[0].equals(username)) {
+                    found = true;
+                    returnedCar = new Car(parts[1], parts[2], parts[3], 
+                                        Integer.parseInt(parts[4]), 
+                                        Double.parseDouble(parts[5]));
+                } else {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(ConsoleColors.RED + "Error reading reservations: " + e.getMessage() + ConsoleColors.RESET);
+            return;
+        }
+
+        if (found && returnedCar != null) {
+            try (PrintWriter out = new PrintWriter(new FileWriter(reservationsFile))) {
+                for (String line : lines) {
+                    out.println(line);
+                }
+            } catch (IOException e) {
+                System.out.println(ConsoleColors.RED + "Error updating reservations: " + e.getMessage() + ConsoleColors.RESET);
+                return;
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/taken_cars.csv"))) {
+                boolean firstLine = true;
+                for (Car car : carLookup.getTakenCars()) {
+                    if (!car.equals(returnedCar)) {
+                        if (!firstLine) bw.newLine();
+                        bw.write(car.getMarka() + "," + car.getModelis() + "," + 
+                                 car.getTips() + "," + car.getGads() + "," + car.getStundasMaksa());
+                        firstLine = false;
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println(ConsoleColors.RED + "Error updating taken cars: " + e.getMessage() + ConsoleColors.RESET);
+                return;
+            }
+
+            System.out.println(ConsoleColors.GREEN + "Vehicle returned successfully: " + returnedCar + ConsoleColors.RESET);
+        } else {
+            System.out.println(ConsoleColors.RED + "No reservation found for your account." + ConsoleColors.RESET);
+        }
+    }
 
     public void searchAndDisplayCars(User user) {
         if (hasReservation(user.getUsername())) {
@@ -131,84 +211,5 @@ public class CarService {
         }
     }
 
-    private boolean hasReservation(String username) {
-        try (BufferedReader br = new BufferedReader(new FileReader(reservationsFile))) {
-            br.readLine();
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > 0 && parts[0].equals(username)) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println(ConsoleColors.RED + "Error reading reservations: " + e.getMessage() + ConsoleColors.RESET);
-        }
-        return false;
-    }
-
-    private void handleReturnOption(User user) {
-        System.out.print("Would you like to return your current vehicle? (yes/no): ");
-        String choice = scanner.nextLine().trim();
-        if (choice.equalsIgnoreCase("yes")) {
-            returnVehicle(user.getUsername());
-        }
-    }
-
-    public void returnVehicle(String username) {
-        List<String> lines = new ArrayList<>();
-        boolean found = false;
-        Car returnedCar = null;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(reservationsFile))) {
-            String header = br.readLine();
-            lines.add(header);
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 6 && parts[0].equals(username)) {
-                    found = true;
-                    returnedCar = new Car(parts[1], parts[2], parts[3], 
-                                        Integer.parseInt(parts[4]), 
-                                        Double.parseDouble(parts[5]));
-                } else {
-                    lines.add(line);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println(ConsoleColors.RED + "Error reading reservations: " + e.getMessage() + ConsoleColors.RESET);
-            return;
-        }
-
-        if (found && returnedCar != null) {
-            try (PrintWriter out = new PrintWriter(new FileWriter(reservationsFile))) {
-                for (String line : lines) {
-                    out.println(line);
-                }
-            } catch (IOException e) {
-                System.out.println(ConsoleColors.RED + "Error updating reservations: " + e.getMessage() + ConsoleColors.RESET);
-                return;
-            }
-
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/taken_cars.csv"))) {
-                boolean firstLine = true;
-                for (Car car : carLookup.getTakenCars()) {
-                    if (!car.equals(returnedCar)) {
-                        if (!firstLine) bw.newLine();
-                        bw.write(car.getMarka() + "," + car.getModelis() + "," + 
-                                 car.getTips() + "," + car.getGads() + "," + car.getStundasMaksa());
-                        firstLine = false;
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println(ConsoleColors.RED + "Error updating taken cars: " + e.getMessage() + ConsoleColors.RESET);
-                return;
-            }
-
-            System.out.println(ConsoleColors.GREEN + "Vehicle returned successfully: " + returnedCar + ConsoleColors.RESET);
-        } else {
-            System.out.println(ConsoleColors.RED + "No reservation found for your account." + ConsoleColors.RESET);
-        }
-    }
+    
 }

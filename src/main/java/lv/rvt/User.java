@@ -10,12 +10,15 @@ public class User {
     private String email;
     private String password;
     private float balance;
+    private String currency = "EUR";
 
-    public User(String username, String email, String password, float balance) {
+
+    public User(String username, String email, String password, float balance, String currency) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.balance = balance;
+        this.currency = currency;
     }
 
     public String getUsername() {
@@ -47,27 +50,23 @@ public class User {
     }
 
     public void setCurrency(String currency) {
-        if (currency.equalsIgnoreCase("USD")) {
-
-            System.out.println("Currency set to American dollars.");
-
-        } else if (currency.equalsIgnoreCase("CAD")) {
-
-            System.out.println("Currency set to Canadian dollars.");
-
-        } else if (currency.equalsIgnoreCase("EUR")) {
-
-            System.out.println("Currency set to European euros.");
-
-        } else if (currency.equalsIgnoreCase("AUD")) {
-
-            System.out.println("Currency set to Australian dollars.");
-
-        } else {
-            
-            System.out.println("Invalid currency. Defaulting to Euro.");
-        }
+        this.currency = currency;
     }
+
+    public float getConvertedBalance() {
+        float rate = switch (currency) {
+            case "USD" -> 1.09f;
+            case "CAD" -> 1.47f;
+            case "AUD" -> 1.63f;
+            default -> 1.0f; // Noklusejuma valūta ir EIRO
+        };
+        return balance / rate;
+    }
+
+    public String getCurrency() {
+    return currency;
+}
+
 
     public static void main(String[] args) {
         String csvFile = "users.csv";
@@ -91,7 +90,12 @@ public class User {
                 String password = data[2].trim();
                 float balance = Float.parseFloat(data[3].trim());
             
-                User user = new User(username, email, password, balance);
+                String currency = "EUR"; // Noklusejuma valūta
+                if (data.length > 4) {
+                    currency = data[4].trim();
+                }
+                
+                User user = new User(username, email, password, balance, currency);
                 users.add(user);
             }
         } catch (IOException e) {
@@ -108,5 +112,7 @@ public class User {
             System.out.println("After top-up:");
             System.out.println("Username: " + firstUser.getUsername() + ", Balance: " + firstUser.getBalance());
         }
+
+    
     }
 }

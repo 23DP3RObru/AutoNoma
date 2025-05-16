@@ -44,7 +44,7 @@ public class App {
         }
         
         try (PrintWriter out = new PrintWriter(new FileWriter(credentialsFile, true))) {
-            out.println(username + ", " + email + ", " + password + ", " + 0.0f);
+            out.println(username + ", " + email + ", " + password + ", " + 0.0f + ", EUR");
             System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "Registration successful!"+ ConsoleColors.RESET);
             return true;
         } catch (IOException e) {
@@ -79,8 +79,9 @@ public class App {
                         String userEmail = parts[1].trim();
                         String userPassword = parts[2].trim();
                         float balance = parts.length > 3 ? Float.parseFloat(parts[3].trim()) : 0.0f;
-    
-                        return new User(username, userEmail, userPassword, balance);
+                        String currency = parts.length > 4 ? parts[4].trim() : "EUR";
+                        return new User(username, userEmail, userPassword, balance, currency);
+
                     }
                     System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "Error: Incorrect password!" + ConsoleColors.RESET);
                     return null;
@@ -153,7 +154,7 @@ public class App {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", ");
                 if (parts.length >= 4 && parts[0].equals(user.getUsername())) {
-                    String newLine = user.getUsername() + ", " + parts[1] + ", " + parts[2] + ", " + user.getBalance();
+                    String newLine = user.getUsername() + ", " + parts[1] + ", " + parts[2] + ", " + user.getBalance() + ", " + user.getCurrency();
                     updatedLines.add(newLine);
                 } else {
                     updatedLines.add(line);
